@@ -17,6 +17,7 @@
 
     <TextView
         style="@style/Text.Primary"
+        android:background="@color/colorTransparentBlack"
         android:id="@+id/tv_date_and_time_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

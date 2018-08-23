@@ -6,4 +6,5 @@ public interface DataSourceInterface {
 
     List<ListItem> getListOfData();
 
+    ListItem createNewListItem();
 }

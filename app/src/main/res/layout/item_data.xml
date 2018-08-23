@@ -4,9 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="88dp"
     android:id="@+id/root_list_item"
+    android:background="?android:attr/selectableItemBackground"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imv_list_item_circle"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -14,7 +15,8 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:background="@color/RED"
+        android:alpha=".86"
+        tools:src="@drawable/blue_drawable"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +28,8 @@
         android:layout_marginLeft="17dp"
         android:layout_marginStart="17dp"
         android:layout_marginTop="48dp"
-        android:src="@drawable/ic_event_black_24dp"
+        android:src="@drawable/ic_event_white_24dp"
+        tools:src="@drawable/ic_event_white_24dp"
         app:layout_constraintStart_toEndOf="@+id/imv_list_item_circle"
         app:layout_constraintTop_toTopOf="parent" />
 

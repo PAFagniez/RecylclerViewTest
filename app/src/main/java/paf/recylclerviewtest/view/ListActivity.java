@@ -2,8 +2,11 @@ package paf.recylclerviewtest.view;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,7 +21,7 @@ import paf.recylclerviewtest.data.FakeDataSource;
 import paf.recylclerviewtest.data.ListItem;
 import paf.recylclerviewtest.logic.Controller;
 
-public class ListActivity extends AppCompatActivity implements ViewInterface {
+public class ListActivity extends AppCompatActivity implements ViewInterface, View.OnClickListener{
 
     private static final String EXTRA_DATE_AND_TIME = "EXTRA_DATE_AND_TIME";
     private static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
@@ -39,6 +42,10 @@ public class ListActivity extends AppCompatActivity implements ViewInterface {
         recyclerView = (RecyclerView) findViewById(R.id.rec_list_activity);
         layoutInflater = getLayoutInflater();
 
+        FloatingActionButton floatingActionButton = new FloatingActionButton(this);
+        floatingActionButton.setOnClickListener();
+
+
         controller = new Controller(this, new FakeDataSource());
     }
 
@@ -55,10 +62,49 @@ public class ListActivity extends AppCompatActivity implements ViewInterface {
     @Override
     public void setUpAdapterAndView(List<ListItem> listOfData) {
         this.listOfData = listOfData;
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
 
         adapter = new CustomAdapter();
         recyclerView.setAdapter(adapter);
+
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(
+                recyclerView.getContext(),
+                layoutManager.getLayoutDirection()
+        );
+
+        itemDecoration.setDrawable(
+                ContextCompat.getDrawable(
+                        ListActivity.this,
+                        R.drawable.divider_white
+                )
+        );
+
+        recyclerView.addItemDecoration(
+                itemDecoration
+        );
+    }
+
+    @Override
+    public void addNewListItemToView(ListItem newItem) {
+        listOfData.add(newItem);
+        int endOflList = listOfData.size() - 1;
+
+        adapter.notifyItemInserted(endOflList);
+        recyclerView.smoothScrollToPosition(endOflList);
+    }
+
+    @Override
+    public void onClick(View view) {
+        int viewId = view.getId();
+        if(viewId == R.id.fab_create_new_item) {
+            controller.createNewListItem();
+        }
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 
     private class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
@@ -83,6 +129,7 @@ public class ListActivity extends AppCompatActivity implements ViewInterface {
             holder.dateAndTime.setText(
                     currentItem.getDateAndTime()
             );
+
         }
 
         @Override

@@ -27,4 +27,9 @@ public class Controller {
                 testItem.getColorResource()
         );
     }
+
+    public void createNewListItem() {
+        ListItem newItem = dataSource.createNewListItem();
+        view.addNewListItemToView(newItem);
+    }
 }
